@@ -1,1 +1,6 @@
+com/DataFile$Clinet_TestData.class
+com/automation/DataProvider.class
+com/DataFile.class
 com/automation/FirstTest.class
+com/automation/ExcelDataSupplyier.class
+com/automation/ClientsPF.class
