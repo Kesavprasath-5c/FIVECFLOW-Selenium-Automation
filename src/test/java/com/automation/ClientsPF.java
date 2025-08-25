@@ -38,7 +38,7 @@ public class ClientsPF {
 			System.out.println("Login failed");
 		}
         }
-      @Test  
+ @Test
 public void NormalCaseActivation(){
 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	
