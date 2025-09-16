@@ -7,5 +7,11 @@ public class DataFile {
 		    public static final String password = "ox7L1DsC31U?";
          }
     
+    public class Admin_TestData {
+		public static final String Admin_url = "https://e2e-qa-admin.5cnetwork.com/";
+		public static final String Admin_email = "kesav@5cnetwork.com";
+		public static final String Admin_password = "Kesav@296$3*";
+		
 
+	}
 }
