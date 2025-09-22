@@ -76,12 +76,12 @@ WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
  		elem.sendKeys("CT 3D");
 		elem.sendKeys(Keys.ENTER);
 		driver.findElement(By.id("nest-messages_user_clinical")).sendKeys("testing");
-        //  try {
-        //      driver.findElement(By.xpath("//span[contains(text(),'General Radiologist Pool')]")).click();
-        // } 
-		// catch (Exception e) {
-        //      System.out.println("No General Radiologist Pool Button found");
-        // }
+         try {
+             driver.findElement(By.xpath("//span[contains(text(),'General Radiologist Pool')]")).click();
+        } 
+		catch (Exception e) {
+             System.out.println("No General Radiologist Pool Button found");
+        }
         driver.findElement(By.xpath("//button[contains(text(),'Send for Reporting')]")).click();
         		
  		try {

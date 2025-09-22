@@ -7,7 +7,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -90,6 +89,7 @@ public class RadReporting {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Submit & stop reporting')]"))).click();  
 
  }
+ 
 
 }
 
