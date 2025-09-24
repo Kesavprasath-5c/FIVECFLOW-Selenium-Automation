@@ -2,7 +2,6 @@ package com.automation;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.Duration;
 import org.openqa.selenium.By;
