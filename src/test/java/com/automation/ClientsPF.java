@@ -50,8 +50,8 @@ public class ClientsPF {
 		}
         }
  @Test
-public void NormalCaseActivation() throws Exception{
-WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    public void NormalCaseActivation() throws Exception{
+     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
     	try {
@@ -130,7 +130,8 @@ WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		} 
 		catch (Exception e) {
 			System.out.println("specified location is not exist");
+		
 		}
 }
-
+    
 				}
