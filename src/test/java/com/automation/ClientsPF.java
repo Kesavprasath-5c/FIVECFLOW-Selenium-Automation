@@ -3,12 +3,16 @@ package com.automation;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,8 +33,8 @@ public class ClientsPF {
     WebDriver driver;
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    @BeforeMethod
 
+    @BeforeMethod
     public void clientLogin() {
         ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
@@ -133,5 +137,12 @@ public class ClientsPF {
 		
 		}
 }
+    @Test
+     public void capture() throws Exception{
+		TakesScreenshot tr = (TakesScreenshot)driver;
+		File  file = tr.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(file, new File("/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/screenshotfloder/image1.png"));
+        driver.quit();
+	 }
     
 				}
