@@ -18,5 +18,10 @@ public class DataFile {
 		public static final String Rad_email = "irad1@gmail.com";
 		public static final String Rad_password = "tele123";
 	 }
-
+    
+	 public class QC_TestData {
+        public static final String url = "https://e2e-qa-admin.5cnetwork.com";
+        public static final String email = "kesavprasath@5cnetwork.com";
+	    public static final String password = "Kesav@5C";
+     }
 }

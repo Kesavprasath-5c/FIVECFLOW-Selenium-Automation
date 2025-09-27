@@ -1,0 +1,27 @@
+!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="ListenersLearning">
+<listeners>
+<listener class = "com.automation.ItestListenersClass" />
+</listeners>
+  <test name="Normal_Flow">
+    <classes>
+      <class name = "com.automation.ITestClass">
+      <method>
+      <include name="TestMethod1"/>
+       <include name="TestMethod2"/>
+      </method>
+      </class>
+    </classes>
+  </test>
+  <test name="Normal_Flow2">
+    <classes>
+      <class name = "com.automation.ITestClass">
+      <method>
+      <include name="TestMethod3"/>
+       <include name="TestMethod4"/>
+      </method>
+      </class>
+    </classes>
+  </test>
+
+</suite>

@@ -3,49 +3,44 @@ package com.automation;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.DataFile.Clinet_TestData;
 
 
+@Listeners ({ItestListenersClass.class})
+public class ClientsPF extends BaseClass{
+   
+  
+ 
 
-public class ClientsPF {
-    WebDriver driver;
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-
-    @BeforeMethod
-    public void clientLogin() {
-        ChromeOptions options = new ChromeOptions();
-		options.addArguments("--disable-notifications");
-		driver = new ChromeDriver(options);
-        driver.get(com.DataFile.Clinet_TestData.url);  
-        driver.manage().window().maximize();
-        driver.findElement(By.id("basic_emailId")).sendKeys(Clinet_TestData.email);
-		driver.findElement(By.id("basic_password")).sendKeys(Clinet_TestData.password, Keys.ENTER);
+   @BeforeMethod
+    public void clientLogin() throws Exception {
+        LaunchBrowser();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    	driver.get(com.DataFile.Clinet_TestData.url); 
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_emailId")));
+		username.sendKeys(com.DataFile.Clinet_TestData.email);
+        WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_password")));
+		password.sendKeys(Clinet_TestData.password, Keys.ENTER);
         try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Welcome, Jeevan Hospital')]")));
+			WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait1.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Welcome, Jeevan Hospital')]")));
 			System.out.println("Login Passed");
 		}
 		catch (Exception e) {
@@ -55,8 +50,8 @@ public class ClientsPF {
         }
  @Test
     public void NormalCaseActivation() throws Exception{
-     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	
+		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
     	try {
     		WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
@@ -101,10 +96,10 @@ public class ClientsPF {
 
 	 @Test
       public void get_CaseId() throws Exception {
-        
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Finish')]"))).click();
-		//done.
+		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Finish')]"))).click();
+
 		
 		try {
     		WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
@@ -137,12 +132,11 @@ public class ClientsPF {
 		
 		}
 }
-    @Test
-     public void capture() throws Exception{
-		TakesScreenshot tr = (TakesScreenshot)driver;
-		File  file = tr.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(file, new File("/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/screenshotfloder/image1.png"));
-        driver.quit();
-	 }
     
+
+    @AfterMethod
+    public void tearDown() {
+     //   closeBrowser();
 				}
+
+	}
