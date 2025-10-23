@@ -18,8 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.DataFile;
-import com.DataFile.QC_TestData;
+import com.automation.DataFile.QC_TestData;
 
 public class OQC_Reporting {
 

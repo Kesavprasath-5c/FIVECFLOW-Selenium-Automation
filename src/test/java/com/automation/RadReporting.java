@@ -20,7 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.DataFile.Rad_TestData;
+import com.automation.DataFile.Rad_TestData;
 
 public class RadReporting {
     WebDriver driver;

@@ -11,9 +11,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 
+
+
 public class BaseClass {
     protected static WebDriver driver; 
-
+  
+   
     public void LaunchBrowser(){
         ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
