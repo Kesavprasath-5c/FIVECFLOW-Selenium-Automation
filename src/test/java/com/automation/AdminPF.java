@@ -15,7 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.DataFile.Admin_TestData;
+import com.automation.DataFile.Admin_TestData;
 
 public class AdminPF {
     WebDriver driver;

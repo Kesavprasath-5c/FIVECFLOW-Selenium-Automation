@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
-
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,46 +20,55 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.DataFile.Clinet_TestData;
+
+
 
 
 @Listeners ({ItestListenersClass.class})
 public class ClientsPF extends BaseClass{
    
-  
- 
 
    @BeforeMethod
     public void clientLogin() throws Exception {
         LaunchBrowser();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    	driver.get(com.DataFile.Clinet_TestData.url); 
+    	driver.get(com.automation.DataFile.Clinet_TestData.url); 
+		driver.manage().timeouts().pageLoadTimeout(2,TimeUnit.SECONDS);
         WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_emailId")));
-		username.sendKeys(com.DataFile.Clinet_TestData.email);
-        WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_password")));
-		password.sendKeys(Clinet_TestData.password, Keys.ENTER);
+		username.sendKeys(com.automation.DataFile.Clinet_TestData.email);
+		//com.DataFile.Clinet_TestData.email
+        WebElement userpassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_password")));
+		userpassword.sendKeys(com.automation.DataFile.Clinet_TestData.password, Keys.ENTER);
         try {
 			WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait1.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Welcome, Jeevan Hospital')]")));
+			WebElement confirm_text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Click here to view Demo Videos')]")));
+		    System.out.println(confirm_text.isDisplayed());
+			wait1.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Welcome')]")));
 			System.out.println("Login Passed");
 		}
 		catch (Exception e) {
 			System.out.println("Login failed");
 			
 		}
-        }
- @Test
-    public void NormalCaseActivation() throws Exception{
-		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		
-    	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
+        }
+
+		
+    @Test 
+    public void NormalCaseActivation()throws Exception{
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		
+    	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
     	try {
     		WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
     		shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
     	}
 		catch (Exception e) {
-             
+             System.out.println("Pop are all handled");
 					}
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
+
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Draft')]"))).click();
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Clear All')]"))).click();
 		WebElement lastDiv = wait.until(ExpectedConditions.elementToBeClickable( By.xpath("//tbody//tr[2]/td[last()]//div[contains(@class,'ant-space-item')][last()]")));
@@ -75,8 +84,16 @@ public class ClientsPF extends BaseClass{
  		elem.sendKeys("CT 3D");
 		elem.sendKeys(Keys.ENTER);
 		driver.findElement(By.id("nest-messages_user_clinical")).sendKeys("testing");
+	//	WebElement upload = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Upload')]")));
+		WebElement uploadInput = driver.findElement(By.xpath("//input[@type='file']"));
+        uploadInput.sendKeys("/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/UploadFile/screenshot.png");
+		Thread.sleep(3000);
+	    WebElement uploadButton = driver.findElement(By.xpath("(//button[contains(text(),'Upload')])[2]"));
+        uploadButton.click();
          try {
-             driver.findElement(By.xpath("//span[contains(text(),'General Radiologist Pool')]")).click();
+			WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait3.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'General Radiologist Pool')]"))).click();
+            // driver.findElement(By.xpath("//span[contains(text(),'General Radiologist Pool')]")).click();
         } 
 		catch (Exception e) {
              System.out.println("No General Radiologist Pool Button found");
@@ -85,10 +102,11 @@ public class ClientsPF extends BaseClass{
         		
  		try {
  			WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Clear All')]")));
+			wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Clear All')]")));
  			System.out.println("Case Activated successfully");
  		}
 		catch (Exception e) {
+		
  			System.out.println("Failed to Activate case");
  		}
 	}
@@ -132,7 +150,23 @@ public class ClientsPF extends BaseClass{
 		
 		}
 }
-    
+     
+    @Test
+    public void qr_verification() throws Exception{
+     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Finish')]"))).click();
+	WebElement action = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[@type='button' and contains(@class,'ant-btn')])[1]")));
+     Actions ac = new Actions(driver);
+	 ac.moveToElement(action).click(). perform();
+	 Thread.sleep(1000);
+	 WebElement tooltipText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Mobile App Login QR']")));
+     if (tooltipText.isDisplayed()) {
+            System.out.println("✅ Tooltip is displayed after hover: " + tooltipText.getText());
+        } else {
+            System.out.println("❌ Tooltip is NOT displayed after hover.");
+        }
+	}
 
     @AfterMethod
     public void tearDown() {
