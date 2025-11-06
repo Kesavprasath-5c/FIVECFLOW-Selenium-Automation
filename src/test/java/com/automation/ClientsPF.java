@@ -67,7 +67,7 @@ public class ClientsPF extends BaseClass{
 		catch (Exception e) {
              System.out.println("Pop are all handled");
 					}
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
 
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Draft')]"))).click();
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Clear All')]"))).click();
