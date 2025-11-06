@@ -70,7 +70,8 @@ public class RadReporting {
     Set<String> allWindowHandles = driver.getWindowHandles();
     List<String> lst = new ArrayList<>(allWindowHandles);
     driver.switchTo().window(lst.get(1));
-    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting']"))).click();
+    Thread.sleep(2000);
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting >']"))).click();
     String content="I have a cure for insomnia. It’s probably worth millions of dollars but I’m giving it to you free. It isn’t warm milk or chamomile tea. It’s list making";
     WebElement Protocol = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span")));
     Protocol.click();

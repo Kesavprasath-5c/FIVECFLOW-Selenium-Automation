@@ -44,20 +44,25 @@ public void oqc_Login()
 		BufferedReader BR = new BufferedReader(FR);
 		String caseid =BR.readLine();
         System.out.println(caseid);
-       	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='" + caseid + "']//following::img[contains(@alt,'chevron-right-small-white')]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_expand-sidebar-small']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='QC Case List']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='" + caseid + "']//following::img[contains(@alt,'chevron-right-small-white')]"))).click();
         Set<String> handles  = driver.getWindowHandles();
         System.out.println(handles);
         List<String> handel = new ArrayList<String>(handles);
         driver.switchTo().window(handel.get(1));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting >']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt= \"icon_edit\"]"))).click();
         WebElement textConfirm = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Observations']")));
         if(textConfirm.isDisplayed()){
         WebElement Protocol = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span")));
         Protocol.click();
         Protocol.sendKeys("normal####");
+        
         Thread.sleep(1000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_file-check']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_circle-check']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Accept Case')]"))).click();
             
         }
         else{

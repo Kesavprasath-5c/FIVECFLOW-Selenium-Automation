@@ -3,11 +3,13 @@ com/automation/DataFile.class
 com/Java_Logical_practice/String_missingNumber.class
 com/Java_Logical_practice/StringR.class
 com/Java_Logical_practice/StringSearch_operation.class
-com/Java_Logical_practice/String_palindrom_String.class
+com/Java_Logical_practice/Reverse_sentance.class
 com/automation/Data_Provider_reciver.class
 com/TestNg_practice/parelleRun.class
+com/TestNg_practice/MouseOver_Action.class
 com/automation/AdminPF.class
 com/automation/RadReporting.class
+com/TestNg_practice/TestClass.class
 com/Java_Logical_practice/StringSum_of_digits.class
 com/automation/ClientsPF.class
 com/Java_Logical_practice/StringReverse.class
@@ -22,6 +24,7 @@ com/Java_Logical_practice/String_vowels.class
 com/Java_Logical_practice/StringCount_Even_Odd.class
 com/Java_Logical_practice/StringDuplicate_Array.class
 com/Java_Logical_practice/StringCount_of_numbers.class
+com/Java_Logical_practice/String_palindrom.class
 com/Java_Logical_practice/StringOperations.class
 com/automation/DataFile$Admin_TestData.class
 com/Java_Logical_practice/StringPrime.class
@@ -36,6 +39,7 @@ com/automation/ReadExcelData.class
 com/Java_Logical_practice/StringFibonacci_serious.class
 com/Java_Logical_practice/StringRevesre_number.class
 com/Java_Logical_practice/StrigSum_of_array.class
+com/TestNg_practice/parelleRun3.class
 com/Java_Logical_practice/Replace.class
 com/automation/ItestListenersClass.class
 com/Java_Logical_practice/StringAlbhabest_numbers.class
