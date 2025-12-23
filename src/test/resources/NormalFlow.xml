@@ -1,0 +1,55 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="5C Suite">
+<listeners>
+<listener class="com.FiveC_flow_Test_Components.Listener"/>
+</listeners>
+  <test name="ActivateCase">
+    <classes>
+      <class name="com.FiveC_flow_Test.CaseActivationPage">
+        <methods>
+          <include name="verifyCaseActivation"/>
+        </methods>
+      </class>
+    </classes>  
+  </test>
+
+  <test name="CaseAssigntoRad">
+    <classes>
+      <class name="com.FiveC_flow_Test.CaseAssignToRad">
+        <methods>
+          <include name="caseAssignToRad"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+  
+  <test name="RadReporting">
+    <classes>
+      <class name="com.FiveC_flow_Test.RadReporting">
+        <methods>
+          <include name="normalCaseReporting"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+  
+  <test name="CaseAssigntoQC">
+    <classes>
+      <class name="com.FiveC_flow_Test.CaseAssignToQC">
+        <methods>
+          <include name="assignToQC"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+  
+  <test name="QCReporting">
+    <classes>
+      <class name="com.FiveC_flow_Test.QCReporting">
+        <methods>
+          <include name="qcCaseReporting"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>
