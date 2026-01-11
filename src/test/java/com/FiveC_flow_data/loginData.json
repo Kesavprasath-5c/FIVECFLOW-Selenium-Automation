@@ -1,0 +1,23 @@
+{
+    "clientData":{
+        "clientUserName": "jeevan.hospital@mailinator.com",
+        "clientPassword": "ox7L1DsC31U?",
+        "clientUrl": "https://e2e-qa-client.5cnetwork.com"
+    },
+
+    "radData":{
+        "radUrl": "https://e2e-qa-rads.5cnetwork.com/",
+        "radUserName": "irad1@gmail.com",
+        "radPassword": "tele123"
+    },
+    "adminData":{
+        "adminUrl": "https://e2e-qa-admin.5cnetwork.com/",
+        "adminUserName": "kesav@5cnetwork.com",
+        "adminPassword": "Kesav@296$3*"
+    },
+    "qcData":{
+        "qcUrl": "https://e2e-qa-admin.5cnetwork.com/",
+        "qcUserName": "kesavprasath@5cnetwork.com",
+        "qcPassword": "Kesav@5C"
+    }
+}

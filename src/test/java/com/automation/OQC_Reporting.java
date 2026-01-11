@@ -51,7 +51,13 @@ public void oqc_Login()
         System.out.println(handles);
         List<String> handel = new ArrayList<String>(handles);
         driver.switchTo().window(handel.get(1));
+        try{
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting']"))).click();
+      }
+      catch(Exception e){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Start Reporting >']"))).click();
+        e.getMessage();
+      }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt= \"icon_edit\"]"))).click();
         WebElement textConfirm = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Observations']")));
         if(textConfirm.isDisplayed()){
@@ -62,7 +68,11 @@ public void oqc_Login()
         Thread.sleep(1000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_file-check']"))).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_circle-check']"))).click();
+        Thread.sleep(1000); 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Accept Case')]"))).click();
+        Thread.sleep(1000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Submit & take break')]"))).click();
+        
             
         }
         else{

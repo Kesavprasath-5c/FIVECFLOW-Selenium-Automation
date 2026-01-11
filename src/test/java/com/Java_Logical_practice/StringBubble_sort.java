@@ -1,4 +1,4 @@
-package com.Java_Logical_practice;
+ package com.Java_Logical_practice;
 
 import java.util.Arrays;
 

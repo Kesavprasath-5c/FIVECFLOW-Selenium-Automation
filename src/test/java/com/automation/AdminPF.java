@@ -11,13 +11,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.automation.DataFile.Admin_TestData;
 
-public class AdminPF {
+public class AdminPF extends BaseClass{
     WebDriver driver;
     WebDriverWait wait;
 
@@ -61,42 +63,54 @@ public class AdminPF {
 		BufferedReader BR = new BufferedReader(FR);
 		String caseid =BR.readLine();
 		driver.findElement(By.xpath("//span[text()='Order Id']/preceding-sibling::input[1]")).sendKeys(caseid);
-		driver.findElement(By.xpath("//button[text()='Go']")).click();
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//img[@alt='icon_chevron-bottom']")).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Go']"))).click();
+		//driver.findElement(By.xpath("//button[text()='Go']")).click();
+	    wait.until((ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_chevron-bottom']")))).click();
+		//driver.findElement(By.xpath("//img[@alt='icon_chevron-bottom']")).click();
 		try {
-		driver.switchTo().activeElement().sendKeys("irad");
-        
-        System.out.println("case asssiged successfully");
+		driver.switchTo().activeElement().sendKeys("irad"); 
+        Thread.sleep(1000);
+		WebElement radName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Dr. Irad 1  (1722)']")));
+		radName.click();
 		}
 		catch (Exception e) {
 			System.out.println("The rad you are looking for in the list is not present.");
 		}
-		Thread.sleep(1000);
-		driver.findElement(By.xpath("//span[text()='Dr. Irad 1  (1722)']")).click();
+		
 	    try {
    	    	driver.findElement(By.xpath("//button[contains(text(),'assign anyway')]")).click();
 	    	Thread.sleep(2000);	
 	  
 	    }
 	    catch(Exception e) {
-	    	  	 
+	    	  	 System.out.println("Something went wrong while assigining case to rad");
 	   }
+	    WebElement Status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='ASSIGNED'])[2]")));
+		boolean isStatusDisplayed =Status.isDisplayed();	
+		if(isStatusDisplayed){
+			System.out.println("case assigned to rad successfully");
+		}
+		else{
+			System.out.println("case is not assigned to the rad");
+	
+			Assert.fail("Status check failed: ASSIGNED status not displayed");
+			
+		}
+
 		}
 		else {
 			System.out.println("case study page is not dispalyed");
 		}
-    }
-	@Test
-   public void OQC_Case_Assignment() throws Exception{
+     }
+	 @Test
+     public void OQC_Case_Assignment() throws Exception{
       WebElement logout =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Logout']")));
       if(logout.isDisplayed()){
-		System.out.println("Admin Login Success");
 		 WebElement QcCoordinator= wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@href,'/qc/coordinator')]")));
 		 QcCoordinator.click();
         WebElement QcStudies = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='QC Studies']")));
 		if(QcStudies.isDisplayed()){
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@alt='icon_search']"))).click();
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//img[@alt='icon_search']"))).click();
 
 			File fi = new File("/Users/Kesav/Documents/caseid/id.txt");
 		 	FileReader FR = new FileReader(fi);
@@ -111,24 +125,22 @@ public class AdminPF {
 			driver.switchTo().activeElement().sendKeys("kesav");
 			WebElement qcname = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Kesav']")));
 		    qcname.click();
+			Thread.sleep(1000);
 			WebElement status = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[contains(text(),'ASSIGNED')])[last()]")));
 			
 			if(status.isDisplayed()){
 				System.out.println("case assigned to qc successfully");
 			}
 			else {
-				System.out.println("QA Agent Searchin for is not Avaliable");
+				Assert.fail("Status check failed: ASSIGNED status not displayed");
 			}
 
+		
 		}
 	    else {
 			System.out.println("QcStudies page is not dispalyed");
 
 		}
-		
-		
-		
-		
 		
 		}
 	  else{
@@ -137,5 +149,9 @@ public class AdminPF {
 	  }
 
    }
-	
+   @AfterMethod
+   public void closeBrowser(){
+   
+	  driver.quit();
+  }
 }
