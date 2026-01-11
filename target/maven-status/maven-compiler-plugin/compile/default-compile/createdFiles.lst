@@ -1,2 +1,7 @@
+com/FiveCPageObject/ClientFormFilling.class
+com/FiveCAbstaractComponent/AbstractComponent.class
+com/FiveCPageObject/POMQCReporting.class
 com/automation/BaseClass.class
-com/automation/App.class
+com/FiveCPageObject/POMRadReporting.class
+com/FiveCPageObject/POMCaseAssignToQC.class
+com/FiveCResources/ExtendRepor.class

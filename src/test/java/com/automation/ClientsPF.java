@@ -39,35 +39,32 @@ public class ClientsPF extends BaseClass{
 		//com.DataFile.Clinet_TestData.email
         WebElement userpassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("basic_password")));
 		userpassword.sendKeys(com.automation.DataFile.Clinet_TestData.password, Keys.ENTER);
-        try {
-			WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
-			WebElement confirm_text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Click here to view Demo Videos')]")));
-		    System.out.println(confirm_text.isDisplayed());
-			wait1.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Welcome')]")));
-			System.out.println("Login Passed");
-		}
-		catch (Exception e) {
+       
+			WebElement confirm_text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Finish')]")));
+			if(confirm_text.isDisplayed()){
+				System.out.println("Login Passed");
+			}
+		    
+		   else {
 			System.out.println("Login failed");
 			
 		}
-		
+		  
         }
 
 		
     @Test 
     public void NormalCaseActivation()throws Exception{
 		
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		
-    	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
     	try {
-    		WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
-    		shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
+
+    		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close']"))).click();
     	}
 		catch (Exception e) {
              System.out.println("Pop are all handled");
 					}
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@aria-label='close-circle']"))).click();
 
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Draft')]"))).click();
     	wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Clear All')]"))).click();
@@ -84,31 +81,32 @@ public class ClientsPF extends BaseClass{
  		elem.sendKeys("CT 3D");
 		elem.sendKeys(Keys.ENTER);
 		driver.findElement(By.id("nest-messages_user_clinical")).sendKeys("testing");
-	//	WebElement upload = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Upload')]")));
 		WebElement uploadInput = driver.findElement(By.xpath("//input[@type='file']"));
         uploadInput.sendKeys("/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/UploadFile/screenshot.png");
 		Thread.sleep(3000);
-	    WebElement uploadButton = driver.findElement(By.xpath("(//button[contains(text(),'Upload')])[2]"));
+		WebElement uploadButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Upload')])[2]")));
         uploadButton.click();
-         try {
+         try { 
 			WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait3.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'General Radiologist Pool')]"))).click();
-            // driver.findElement(By.xpath("//span[contains(text(),'General Radiologist Pool')]")).click();
         } 
 		catch (Exception e) {
              System.out.println("No General Radiologist Pool Button found");
         }
-        driver.findElement(By.xpath("//button[contains(text(),'Send for Reporting')]")).click();
-        		
- 		try {
- 			WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Clear All')]")));
- 			System.out.println("Case Activated successfully");
- 		}
-		catch (Exception e) {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Send for Reporting')]"))).click();
+
+		// Most efficient locator for toast message validation
+		By toastLocator = By.xpath("//div[contains(@class,'ant-message-notice-content')]//span[contains(text(),'Cases Activated Successfully')]");
+		WebElement toastMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(toastLocator));
 		
- 			System.out.println("Failed to Activate case");
- 		}
+		if(toastMessage.isDisplayed()) {
+			System.out.println("Case Activated successfully - Toast validated");
+			System.out.println("Toast message: " + toastMessage.getText());
+		}
+		else {
+			System.out.println("Failed to Activate case - Toast not displayed");
+		}
+ 		
 	}
 		
 
@@ -170,7 +168,7 @@ public class ClientsPF extends BaseClass{
 
     @AfterMethod
     public void tearDown() {
-     //   closeBrowser();
+       closeBrowser();
 				}
 
 	}

@@ -7,7 +7,7 @@ public class String_vowels {
         try (Scanner sc = new Scanner(System.in)) {
             System.out.println("Enter the name: ");
       String name =  sc.next();
-            
+      name = name.toLowerCase();  
             //String name = "zppey";
             int count = 0;
             for(int i =0; i<name.length()-1;i++){

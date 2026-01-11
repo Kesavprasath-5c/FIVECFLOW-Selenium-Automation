@@ -23,10 +23,9 @@ public class BaseClass {
 		driver = new ChromeDriver(options);  
         driver.manage().window().maximize();
 
-
     }
 
-      public void closeBrowser() {
+    public void closeBrowser() {
        
             driver.quit();
       }

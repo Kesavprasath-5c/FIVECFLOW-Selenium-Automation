@@ -6,33 +6,66 @@
 <listener class ="com.automation.ItestListenersClass"/>
 </listeners>
 -->
-  <test name="Normal_Flow">
+  <test name="create_case">
     <classes>
       <class name ="com.automation.ClientsPF">
-      <methods>
-       <include name="NormalCaseActivation"/>
-       <include name="get_CaseId"/>
-      </methods>
-      </class>
-      <class name = "com.automation.AdminPF">
-      <methods>
-      <include name = "Rad_case_Assignment"/>
-      </class>
-      <class name = "com.automation.RadReporting">
-      <methods>
-      <include name = "rad_report_submission"/>
-      </methods>
-      </class> 
-      <class name = "com.automation.AdminPF">
        <methods>
-      <include name = "OQC_Case_Assignment"/> 
-      </methods>
-      </class>
-      <class name = "com.automation.OQC_Reporting">
-      <methods>
-      <include name = "OQC_Submit"/>
-      </methods>
+        <include name="NormalCaseActivation"/>
+       </methods>
       </class>
     </classes>
   </test>
+   
+   <test name = "get_case_id" depends-on-methods = "create_case">
+     <classes>
+       <class name = "com.automation.ClientsPF">
+        <methods>
+          <include name = "get_CaseId"/>
+        </methods>
+      </class>
+    </classes>
+   </test>
+
+  <test name ="case_assign_to_rad" depends-on-methods = "get_case_id">
+   <classes>
+    <class name = "com.automation.AdminPF">
+      <methods>
+        <include name ="Rad_case_Assignment"/>
+      </methods>
+    </class>
+   </classes>
+  </test>
+
+  <test name = "Rad_Reporting" depends-on-methods = "case_assign_to_rad">
+   <classes>
+     <class name = "com.automation.RadReporting">
+       <methods>
+        <include name = "rad_report_submission"/>
+      </methods>
+     </class>
+   </classes>
+  </test>
+ 
+ <test name ="Assign_to_QC" depends-on-methods = "Rad_Reporting">
+  <classes>
+    <class name = "com.automation.AdminPF">
+      <methods>
+        <include name = "OQC_Case_Assignment"/>
+      </methods>
+    </class> 
+  </classes> 
+ </test>
+
+  <test name = "QC_case_Reporting" depends-on-methods = "Assign_to_QC">
+    <classes>
+      <class name = "com.automation.OQC_Reporting">
+      <methods>
+        <include name = "OQC_Submit"/>
+      </methods>
+     </class>
+   </classes>
+  </test>
 </suite>
+
+
+
