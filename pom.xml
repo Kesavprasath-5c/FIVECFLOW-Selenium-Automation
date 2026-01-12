@@ -77,6 +77,12 @@
       </properties>
     </profile>
     <profile>
+      <id>CucumberRegressionNormalFlow</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/cucumber-testng.xml</suiteXmlFile>
+      </properties>
+    </profile>
+    <profile>
       <id>RegressionPre_ReadFlow</id>
       <properties>
         <suiteXmlFile>src/test/resources/Pre_ReadFlow.xml</suiteXmlFile>
