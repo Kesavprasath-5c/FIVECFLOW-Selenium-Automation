@@ -18,7 +18,7 @@ import io.cucumber.testng.CucumberOptions;
         // mvn test -Dtest=TestNGCucumberRunner  this is the command to run the feature file
 
         features = "src/test/java/com/cucumber/stepExecution.feature", glue = { "com.stepDefination" }, 
-        tags = "@tag4",
+        tags = "@tag",
 
         plugin = {
                 "pretty",
