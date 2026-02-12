@@ -13,7 +13,25 @@ public class ImageUtil {
 
     public static void copyImageToClipboard(String filePath) throws Exception {
         File imageFile = new File(filePath);
+        
+        // Check if file exists
+        if (!imageFile.exists()) {
+            throw new Exception("Image file not found at path: " + filePath + 
+                ". Please verify the file path is correct.");
+        }
+        
+        // Check if it's a file (not a directory)
+        if (!imageFile.isFile()) {
+            throw new Exception("Path exists but is not a file: " + filePath);
+        }
+        
+        // Read the image
         BufferedImage image = ImageIO.read(imageFile);
+        
+        // Check if image was read successfully
+        if (image == null) {
+            throw new Exception("Failed to read image file. The file may be corrupted or in an unsupported format: " + filePath);
+        }
 
         TransferableImage transferableImage = new TransferableImage(image);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

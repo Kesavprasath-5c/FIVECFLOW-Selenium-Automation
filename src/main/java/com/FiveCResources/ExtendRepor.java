@@ -6,7 +6,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 public class ExtendRepor {
 
     /*
-    Add Extend report Dependencies in POM.xml
+    Add Extend report Dependencies in POM.xml (extentreports dependencies)
     There are 2 classes in ExtendReport 
     1. ExtentReports--> This is the main class responsible to driver all the reports 
     It manages:
@@ -15,8 +15,8 @@ public class ExtendRepor {
     Attaching screenshots
     Flushing data from the report
     Think of it as the brain of the reporting system 
-    2. ExtentSparkReporter --> this responsible to generates a beautiful HTML report and can made some configurations in that report
-    This 2 classes are used to generate the report
+    2. ExtentSparkReporter --> this responsible made some configurations in that report like giving ReportName, Report DocumentTitle 
+    This 2 classes are used to generate the report 
     NOte: System.getProperty("user.dir") this will give the project path dynamically
      */
     public static ExtentReports getExtendReportObject() {

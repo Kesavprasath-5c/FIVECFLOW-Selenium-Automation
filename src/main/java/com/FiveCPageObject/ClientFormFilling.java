@@ -135,6 +135,16 @@ public class ClientFormFilling extends AbstractComponent {
         Thread.sleep(1000);
         studyDropdown.sendKeys(Keys.ENTER);
     }
+    public void selectPreReadStudy() throws Exception {
+        List<WebElement> dropdownElements = driver.findElements(dropDownListBy);
+        WebElement studyDropdown = dropdownElements.get(2);
+        studyDropdown.click();
+        Thread.sleep(1000);
+        studyDropdown.sendKeys("CT PNS");
+        Thread.sleep(1000);
+        studyDropdown.sendKeys(Keys.ENTER);
+    }
+
 
     public void sendForReporting() {
         sendForReporting.click();

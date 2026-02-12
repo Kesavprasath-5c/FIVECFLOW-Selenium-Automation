@@ -44,16 +44,17 @@ public class RadReporting extends BaseTest {
             pomRadReporting.protocolSection(content);
             Thread.sleep(1000);
             pomRadReporting.observationsSection(content);
-            String imagePath = "/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/UploadFile/Dicom-img.jpeg";
-            ImageUtil.copyImageToClipboard(imagePath);
-            pomRadReporting.clickInsertImageButton();
-            Thread.sleep(2000);
             if (pomRadReporting.savedtextDisplayed()) {
                 System.out.println("Protocol and Observations are saved");
             } else {
                 Assert.fail("Protocol and Observations are not saved");
             }
-
+            Thread.sleep(2000);
+            String imagePath = System.getProperty("user.dir") + "//src//test//resources//UploadFile//Dicom-img.jpeg";
+            ImageUtil.copyImageToClipboard(imagePath);
+            pomRadReporting.clickInsertImageButton();
+            Thread.sleep(2000);
+           
             pomRadReporting.clickSubmitButton();
             pomRadReporting.clickSubmitTakeBreakButton();
             pomRadReporting.switchToParentWindow();

@@ -31,11 +31,13 @@ public class BaseTest {
   public WebDriver initializeDriver() throws Exception {
     // This is one of the way to get the value present in the Global.properties file
     Properties prop = new Properties();
+    // This fileInputStream reads the file data in Bytes instead of reading directly as Text Format
     FileInputStream file = new FileInputStream(
     System.getProperty("user.dir") + "//src//main//java//com//FiveCResources//Global.properties");
     prop.load(file);
-    // Below line is a Ternary operator saying that if System.getProperty("browser") is not null then use that value else use the value present in the Global.properties file 
-    // else use global property value declared in the properties file
+    // Below line is a Ternary operator saying that if System.getProperty("browser") is not null then use that value given by the user 
+    // this System.getPropery("browser") is used to read the paramater given by user via terminal
+     // else use global property value declared in the properties file
     String browserName = System.getProperty("browser")!= null ?  System.getProperty("browser"):prop.getProperty("browser");
     
 
@@ -64,9 +66,7 @@ public class BaseTest {
     // convert String to Map
     // To convert String to Map we need to use the jackson Databind dependency
     ObjectMapper mapper = new ObjectMapper();
-    HashMap<String, HashMap<String, String>> data = mapper.readValue(jsonContent,
-        new TypeReference<HashMap<String, HashMap<String, String>>>() {
-        });
+    HashMap<String, HashMap<String, String>> data = mapper.readValue(jsonContent,new TypeReference<HashMap<String, HashMap<String, String>>>() {});
     return data.get(dataSetName);
   }
 
@@ -106,6 +106,6 @@ public class BaseTest {
 
   @AfterMethod
   public void tearDown() {
-  driver.quit();
+ // driver.quit();
   }
 }

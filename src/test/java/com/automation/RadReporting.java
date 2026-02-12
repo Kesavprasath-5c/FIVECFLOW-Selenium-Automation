@@ -96,7 +96,7 @@ public class RadReporting {
         Observation.click();
         Observation.sendKeys(content);
         Thread.sleep(2000);
-        String imagePath = "/Users/Kesav/Desktop/automation-projects/FIVECFLOW-Selenium-Automation/src/test/resources/UploadFile/Dicom-img.jpeg";
+        String imagePath = System.getProperty("user.dir") + "//src//test//resources//UploadFile//Dicom-img.jpeg";
         ImageUtil.copyImageToClipboard(imagePath);
         WebElement insert = wait
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='icon_insert-image']")));

@@ -9,15 +9,13 @@ import com.FiveCResources.ExtendRepor;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import java.io.File;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
-public class Listener implements ITestListener {
+
+
+public class Listener extends BaseTest implements ITestListener {
    ExtentReports extent;
    ExtentTest test;
-
+// This Listener class will not simply deducted by xml file whil running the we need explicity tell by declering the Listeners tag , then suit will understand that before executing the meth0d we need first go and check wht the listeners says
    public Listener() {
        // Initialize here or inside methods to avoid static load issues
        try {
@@ -26,9 +24,12 @@ public class Listener implements ITestListener {
            System.out.println("Extent Report failed to initialize: " + e.getMessage());
        }
    }
-
+   // for every Test method this result varibale is automatcally passed
+   // This results will holds the information about which test going to execute 
+   // so using this result we can get  methdo name which is going to executed 
    @Override
    public void onTestStart(ITestResult result) {
+      // Basically this "result" will hold the information about the result which is goig to execute  in this method and setting the entry in the report
       if (extent != null) {
          test = extent.createTest(result.getMethod().getMethodName());
      }
@@ -36,6 +37,7 @@ public class Listener implements ITestListener {
 
    @Override
    public void onTestSuccess(ITestResult result) {
+      //This line of code say that if test is passed successfully then below line of code will exectute 
       test.log(Status.PASS, "Test Passed");
    }
 
@@ -49,33 +51,28 @@ public class Listener implements ITestListener {
          e.printStackTrace();
       }
       
-      // this test.fail will add the failure details in the report
-      test.fail(result.getThrowable());
+      // this test.fail will add the failure details in the report like it will throw the error msg 
+
+      test.fail(result.getThrowable()); 
       test.log(Status.FAIL, "Test Failed");
       
-      String filepath = null;
-      if (driver != null) {
+      if (driver != null) { 
          try {
-            // Take screenshot directly
-            TakesScreenshot ts = (TakesScreenshot) driver;
-            File source = ts.getScreenshotAs(OutputType.FILE);
-            File file = new File(System.getProperty("user.dir") + "//reports//" + result.getMethod().getMethodName() + ".png");
-            FileUtils.copyFile(source, file);
-            filepath = System.getProperty("user.dir") + "//reports//" + result.getMethod().getMethodName() + ".png";
+            // Use BaseTest's getScreenShot method to avoid code duplication
+            String filepath = getScreenShot(result.getMethod().getMethodName(), driver);
+            // Attach screenshot to Extent Report first agr setting the path and second arg where setting how we need to name the screenshot
+            test.addScreenCaptureFromPath(filepath, result.getMethod().getMethodName());
+   
          } 
          catch (Exception e) {
             e.printStackTrace();
          }
-      }
-
-      if (filepath != null) {
-         // Here we sending the Screenshot path and saying the test name as the Report name
-         test.addScreenCaptureFromPath(filepath, result.getMethod().getMethodName());
-      }
+      } 
    }
 
    @Override
    public void onFinish(ITestContext context) {
+      // this is responsible to generate the report if we miss this all report creation entry will we done but it will fail to generate the report
       extent.flush();
    }
 }

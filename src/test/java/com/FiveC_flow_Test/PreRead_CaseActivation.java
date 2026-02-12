@@ -2,24 +2,23 @@ package com.FiveC_flow_Test;
 
 import java.time.Duration;
 import java.util.HashMap;
-import org.testng.annotations.DataProvider;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.FiveCPageObject.ClientFormFilling;
 import com.FiveC_flow_Test_Components.BaseTest;
 import com.FiveC_flow_data.OrderIdFileUtil;
+ 
+public class PreRead_CaseActivation extends BaseTest {
 
-public class CaseActivationPage extends BaseTest {
-
-    @Test(dataProvider = "getData")
-    public void verifyCaseActivation(HashMap<String, String> input) throws Exception {
+    @Test(dataProvider = "getData" )
+    public void PreRead_Activation(HashMap<String, String> input ) throws Exception   {
         launchClientApplication(input.get("clientUrl"));
-        // For Login we need to call the launchClientApplication method object
-
         clientLoginPage.ClientloginApplication(input.get("clientUserName"), input.get("clientPassword"));
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         // Verify login success or failure
@@ -51,7 +50,7 @@ public class CaseActivationPage extends BaseTest {
             fillforms.phone();
             fillforms.age();
             fillforms.referringPhysician();
-            fillforms.selectStudy();
+            fillforms.selectPreReadStudy();
             fillforms.history();
             WebElement uploadInput = driver.findElement(By.xpath("//input[@type='file']"));
             uploadInput.sendKeys(System.getProperty("user.dir") + "//src//test//resources//UploadFile//screenshot.png");
@@ -75,21 +74,17 @@ public class CaseActivationPage extends BaseTest {
             } else {
                 System.out.println("Failed to Activate case");
             }
-
         }
-
-        else {
-            System.out.println("Client Login Failed: " + toastText);
-            return;
-        }
-
     }
-
+    
     @DataProvider
-    public Object[][] getData() throws Exception {
-        String filePath = System.getProperty("user.dir") + "//src//test//java//com//FiveC_flow_data//loginData.json";
-        HashMap<String, String> data = getJsontoMap(filePath, "clientData");
+    public Object[][] getData() throws Exception{
+        String filepath = System.getProperty("user.dir")+ "//src//test//java//com//FiveC_flow_data//loginData.json";
+        HashMap<String, String> data = getJsontoMap(filepath,"clientData");
         return new Object[][] { { data } };
-    }
+    } 
+   
+    
+    
 }
- 
+

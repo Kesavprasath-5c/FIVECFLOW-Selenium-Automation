@@ -31,9 +31,9 @@ public class AbstractComponent {
         return wait.until(ExpectedConditions.visibilityOf(adminUserName));
     }
 
-    public void waitForWebElementToAppearBy(By generalRadiologistPoolBy) {
+    public void waitForWebElementToAppearBy(By findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(generalRadiologistPoolBy));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
     }
 
     public void waitForToastToDisappear(WebElement element) {

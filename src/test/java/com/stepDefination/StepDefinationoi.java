@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.FiveC_flow_Test.CaseActivationPage;
 import com.FiveC_flow_Test.CaseAssignToQC;
 import com.FiveC_flow_Test.CaseAssignToRad;
+import com.FiveC_flow_Test.PreRead_CaseActivation;
 import com.FiveC_flow_Test.QCReporting;
 import com.FiveC_flow_Test.RadReporting;
 import com.FiveC_flow_Test_Components.BaseTest;
@@ -23,7 +24,10 @@ public class StepDefinationoi extends BaseTest {
 
         @Before
         public void setup() throws Exception {
-                driver = initializeDriver();
+                if (driver == null) {
+                        driver = initializeDriver();
+                        System.out.println("Driver initialized successfully");
+                }
         }
 
         @After
@@ -47,6 +51,34 @@ public class StepDefinationoi extends BaseTest {
                 CaseActivationPage activation = new CaseActivationPage();
                 activation.driver = this.driver; // IMPORTANT: Pass the driver instance
                 activation.verifyCaseActivation(clientData);
+        }
+
+        @Given("Login to Client Page and acivate a preRead case and get the order_ID")
+        public void Login_to_Client_Page_and_acivate_a_preRead_case_and_get_the_order_ID() throws Exception{
+                // Ensure driver is initialized
+                if (driver == null) {
+                        driver = initializeDriver();
+                        System.out.println("Driver initialized in step definition");
+                }
+                
+                // Verify driver is not null
+                if (driver == null) {
+                        throw new Exception("Driver is still null after initialization!");
+                }
+                
+                String filePath = System.getProperty("user.dir") + "//src//test//java//com//FiveC_flow_data//loginData.json";
+                HashMap<String,String> clientData = getJsontoMap(filePath, "clientData");
+                
+                PreRead_CaseActivation preread = new PreRead_CaseActivation();
+                preread.driver = this.driver;  // Pass the initialized driver
+                
+                // Verify driver was set
+                if (preread.driver == null) {
+                        throw new Exception("Failed to set driver in PreRead_CaseActivation instance!");
+                }
+                
+                System.out.println("Calling PreRead_Activation with driver: " + (preread.driver != null ? "Initialized" : "NULL"));
+                preread.PreRead_Activation(clientData);
         }
 
         @When("Assign the case to rad")

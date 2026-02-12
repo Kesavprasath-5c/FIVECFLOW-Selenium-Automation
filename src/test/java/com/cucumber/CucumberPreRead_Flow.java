@@ -15,14 +15,15 @@ import io.cucumber.testng.CucumberOptions;
         // ByDefault Cucumber cannot scane the TestNG assertion or TestNG Libraries to
         // overcome this issue TestNG intorduced this AbstractTestNGCucumberTests
 
-        // mvn test -Dtest=TestNGCucumberRunner  this is the command to run the feature file
+        // mvn test -Dtest=CucumberPreRead_Flow  this is the command to run the feature file
 
-        features = "src/test/java/com/cucumber/stepExecution.feature", glue = { "com.stepDefination" }, 
+        features = "src/test/java/com/cucumber/preRead.feature", 
+        glue = { "com.stepDefination" }, 
         tags = "@tag",
 
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/CucumberReport.html"
         }, monochrome = true)
-public class TestNGCucumberRunner extends AbstractTestNGCucumberTests {
+public class CucumberPreRead_Flow extends AbstractTestNGCucumberTests {
 }
