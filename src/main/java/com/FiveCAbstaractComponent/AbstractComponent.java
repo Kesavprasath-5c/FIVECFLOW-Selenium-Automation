@@ -33,7 +33,7 @@ public class AbstractComponent {
 
     public void waitForWebElementToAppearBy(By findBy) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
+        wait.until(ExpectedConditions.elementToBeClickable(findBy));
     }
 
     public void waitForToastToDisappear(WebElement element) {

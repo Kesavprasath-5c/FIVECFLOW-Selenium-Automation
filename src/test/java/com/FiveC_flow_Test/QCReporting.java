@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.FiveCPageObject.POMQCReporting;
 import com.FiveC_flow_Test_Components.BaseTest;
+import com.FiveC_flow_data.ImageUtil;
 import com.FiveC_flow_data.OrderIdFileUtil;
 
 import java.util.HashMap;
@@ -61,9 +62,9 @@ public class QCReporting extends BaseTest {
         }
 
     }
-    
+
     @Test(dataProvider = "getData")
-    public void preRead_Reporting(HashMap<String, String> input) throws Exception{
+    public void preRead_Reporting(HashMap<String, String> input) throws Exception {
         launchAdminApplication(input.get("qcUrl"));
         adminLogInPage.AdminloginApplication(input.get("qcUserName"), input.get("qcPassword"));
         POMQCReporting qcReporting = new POMQCReporting(driver);
@@ -83,32 +84,26 @@ public class QCReporting extends BaseTest {
                 } catch (Exception e) {
                     qcReporting.clickStartReportingButton2();
                 }
+
                 String content = "I have a cure for insomnia. It’s probably worth millions of dollars but I’m giving it to you free. It isn’t warm milk or chamomile tea. It’s list making";
 
                 qcReporting.protocolSection(content);
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("window.scrollBy(0,500)");
                 Thread.sleep(2000);
-                qcReporting.ObservationsSection(content);
-                
-                boolean isSavedTextVisible = qcReporting.saveTexIsDisplayed();
+                qcReporting.observationsSection(content);
+                String imagePath = System.getProperty("user.dir")
+                        + "//src//test//resources//UploadFile//Dicom-img.jpeg";
+                ImageUtil.copyImageToClipboard(imagePath);
+                qcReporting.clickInsertImageButton();
+
+                boolean isSavedTextVisible = qcReporting.saveTextIsDisplayed();
                 Assert.assertTrue(isSavedTextVisible, "Saved text is NOT displayed");
-              
-                 
-
-
+                Thread.sleep(2000);
+                qcReporting.clickTkeBreakCheckBox();
+                qcReporting.clickReportableButton();
+                qcReporting.clickContinueWithoutMergingIfVisible();
                 
-                // qcReporting.verifyReportEditedSuccessfully();
-                // Thread.sleep(2000);
-                // qcReporting.clickApproveButton();
-                // Thread.sleep(1000);
-                // qcReporting.clickAcceptCaseButton();
-                // qcReporting.clickSubmitButtonAndTakeBreak();
-                // Thread.sleep(2000);
-                // // Capture the toast immediately after the submit click
-                // String toastMessage = qcReporting.getStudyAcceptedToastText();
-                // Assert.assertEquals(toastMessage, "Study accepted successfully");
-                // System.out.println("Toast Message: " + toastMessage);
 
             } else {
                 System.out.println("Case Studies Page is not displayed");
@@ -118,8 +113,6 @@ public class QCReporting extends BaseTest {
             System.out.println("Admin Login Failed");
             Assert.fail("Admin Login Failed");
         }
-
-
 
     }
 

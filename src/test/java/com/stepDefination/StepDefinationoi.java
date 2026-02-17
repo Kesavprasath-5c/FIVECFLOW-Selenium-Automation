@@ -129,10 +129,6 @@ public class StepDefinationoi extends BaseTest {
          QCReporting qcReporting = new QCReporting();
          qcReporting.driver= this.driver;
          qcReporting.preRead_Reporting(qcData);
-         
-
-
-         
         }
 
 }
