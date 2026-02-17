@@ -18,6 +18,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.io.FileUtils;
+import org.checkerframework.checker.units.qual.g;
+
 import java.io.File;
 
 public class StepDefinationoi extends BaseTest {
@@ -119,6 +121,18 @@ public class StepDefinationoi extends BaseTest {
                 QCReporting qcReporting = new QCReporting();
                 qcReporting.driver = this.driver;
                 qcReporting.qcCaseReporting(qcData);
+        }
+        @And("PreRead Reporting the case")
+        public void PreRead_Reporting_the_case() throws Exception{
+         String filePath = System.getProperty("user.dir")+"//src//test//java//com//FiveC_flow_data//loginData.json";
+         HashMap<String,String> qcData =getJsontoMap(filePath, "filePath");
+         QCReporting qcReporting = new QCReporting();
+         qcReporting.driver= this.driver;
+         qcReporting.preRead_Reporting(qcData);
+         
+
+
+         
         }
 
 }

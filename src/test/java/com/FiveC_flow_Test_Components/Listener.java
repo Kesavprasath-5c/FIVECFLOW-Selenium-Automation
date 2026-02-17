@@ -15,7 +15,7 @@ import com.aventstack.extentreports.Status;
 public class Listener extends BaseTest implements ITestListener {
    ExtentReports extent;
    ExtentTest test;
-// This Listener class will not simply deducted by xml file whil running the we need explicity tell by declering the Listeners tag , then suit will understand that before executing the meth0d we need first go and check wht the listeners says
+// This Listener class will not simply deducted by xml file whil running the we need explicity tell by declering the Listeners tag , then suit will understand that before executing the meth0d we need first go and check what the listeners says
    public Listener() {
        // Initialize here or inside methods to avoid static load issues
        try {

@@ -40,8 +40,12 @@ public class POMQCReporting extends AbstractComponent {
     WebElement startReportingButton2;
     @FindBy(xpath = "//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span")
     WebElement protocol;
+    @FindBy(xpath = "//span[contains(text(),'Observations')]/ancestor::span/following-sibling::span")
+    WebElement Observations;
     @FindBy(xpath = "//img[@alt='icon_edit']")
     WebElement editIcon;
+    @FindBy(xpath = "//span[contains(text(),'Saved')]")
+    WebElement saveTextisDisplayed;
     @FindBy(xpath = "//img[@alt='icon_file-check']")
     WebElement saveButton;
     @FindBy(xpath = "//div[contains(@class,'Icon__IconContainer')]//img[@alt='icon_circle-check']")
@@ -63,6 +67,8 @@ public class POMQCReporting extends AbstractComponent {
     By startReportingButtonBy = By.xpath("//button[text()='Start Reporting']");
     By startReportingButton2By = By.xpath("//button[text()='Start Reporting >']");
     By protocolBy = By.xpath("//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span");
+    By ObservationsBy = By.xpath("//span[contains(text(),'Observations')]/ancestor::span[3]/following-sibling::span");
+    By saveTextisDisplayedBy = By.xpath("//span[contains(text(),'Saved')]");
     By editIconBy = By.xpath("//img[@alt='icon_edit']");
     By approveButtonBy = By.xpath("//div[contains(@class,'Icon__IconContainer')]//img[@alt='icon_circle-check']");
     By acceptCaseButtonBy = By.xpath("//button[contains(text(),'Accept Case')]");
@@ -119,10 +125,19 @@ public class POMQCReporting extends AbstractComponent {
 
     public void protocolSection(String content) throws Exception {
         waitForWebElementToAppearBy(protocolBy);
-        Thread.sleep(1000);
         protocol.click();
         protocol.sendKeys(content);
     }
+     public void ObservationsSection(String content){
+        waitForWebElementToAppearBy(ObservationsBy);
+        Observations.click();
+        Observations.sendKeys(content);
+     }
+
+     public Boolean saveTexIsDisplayed(){
+        waitForWebElementToAppearBy(saveTextisDisplayedBy);
+        return saveTextisDisplayed.isDisplayed();
+     }
 
     public void clickSaveButton() {
         waitForLoaderToDisappear();
