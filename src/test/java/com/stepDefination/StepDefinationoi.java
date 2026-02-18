@@ -36,7 +36,8 @@ public class StepDefinationoi extends BaseTest {
         public void tearDown(Scenario scenario) throws Exception {
                 if (scenario.isFailed()) {
                         String screenshotPath = getScreenShot(scenario.getName(), driver);
-                        //cucumber cannot directly read the png file so we need to convert it into byte array
+                        // cucumber cannot directly read the png file so we need to convert it into byte
+                        // array
                         byte[] fileContent = FileUtils.readFileToByteArray(new File(screenshotPath));
                         scenario.attach(fileContent, "image/png", "Failed_Screenshot");
                 }
@@ -56,30 +57,32 @@ public class StepDefinationoi extends BaseTest {
         }
 
         @Given("Login to Client Page and acivate a preRead case and get the order_ID")
-        public void Login_to_Client_Page_and_acivate_a_preRead_case_and_get_the_order_ID() throws Exception{
+        public void Login_to_Client_Page_and_acivate_a_preRead_case_and_get_the_order_ID() throws Exception {
                 // Ensure driver is initialized
                 if (driver == null) {
                         driver = initializeDriver();
                         System.out.println("Driver initialized in step definition");
                 }
-                
+
                 // Verify driver is not null
                 if (driver == null) {
                         throw new Exception("Driver is still null after initialization!");
                 }
-                
-                String filePath = System.getProperty("user.dir") + "//src//test//java//com//FiveC_flow_data//loginData.json";
-                HashMap<String,String> clientData = getJsontoMap(filePath, "clientData");
-                
+
+                String filePath = System.getProperty("user.dir")
+                                + "//src//test//java//com//FiveC_flow_data//loginData.json";
+                HashMap<String, String> clientData = getJsontoMap(filePath, "clientData");
+
                 PreRead_CaseActivation preread = new PreRead_CaseActivation();
-                preread.driver = this.driver;  // Pass the initialized driver
-                
+                preread.driver = this.driver; // Pass the initialized driver
+
                 // Verify driver was set
                 if (preread.driver == null) {
                         throw new Exception("Failed to set driver in PreRead_CaseActivation instance!");
                 }
-                
-                System.out.println("Calling PreRead_Activation with driver: " + (preread.driver != null ? "Initialized" : "NULL"));
+
+                System.out.println("Calling PreRead_Activation with driver: "
+                                + (preread.driver != null ? "Initialized" : "NULL"));
                 preread.PreRead_Activation(clientData);
         }
 
@@ -122,13 +125,20 @@ public class StepDefinationoi extends BaseTest {
                 qcReporting.driver = this.driver;
                 qcReporting.qcCaseReporting(qcData);
         }
+
         @And("PreRead Reporting the case")
-        public void PreRead_Reporting_the_case() throws Exception{
-         String filePath = System.getProperty("user.dir")+"//src//test//java//com//FiveC_flow_data//loginData.json";
-         HashMap<String,String> qcData =getJsontoMap(filePath, "filePath");
-         QCReporting qcReporting = new QCReporting();
-         qcReporting.driver= this.driver;
-         qcReporting.preRead_Reporting(qcData);
+        public void PreRead_Reporting_the_case() throws Exception {
+                String filePath = System.getProperty("user.dir")
+                                + "//src//test//java//com//FiveC_flow_data//loginData.json";
+                HashMap<String, String> qcData = getJsontoMap(filePath, "qcData");
+
+                if (qcData == null) {
+                        throw new Exception("Could not find 'qcData' in loginData.json");
+                }
+
+                QCReporting qcReporting = new QCReporting();
+                qcReporting.driver = this.driver;
+                qcReporting.preRead_Reporting(qcData);
         }
 
 }

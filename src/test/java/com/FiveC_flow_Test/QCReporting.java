@@ -103,6 +103,7 @@ public class QCReporting extends BaseTest {
                 qcReporting.clickTkeBreakCheckBox();
                 qcReporting.clickReportableButton();
                 qcReporting.clickContinueWithoutMergingIfVisible();
+                Thread.sleep(3000);
                 
 
             } else {
