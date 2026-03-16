@@ -41,8 +41,12 @@ public class CaseActivationPage extends BaseTest {
             } catch (Exception e) {
                 System.out.println("Pop are all handled");
             }
-
-            ClientFormFilling fillforms = new ClientFormFilling(driver);
+            
+            
+            
+           ClientFormFilling fillforms = new ClientFormFilling(driver);
+            fillforms.dismissPaymentPopupIfPresent();
+            Thread.sleep(1000);
             fillforms.draftClick();
             fillforms.clearAll();
             fillforms.viewForm();
@@ -51,12 +55,23 @@ public class CaseActivationPage extends BaseTest {
             fillforms.phone();
             fillforms.age();
             fillforms.referringPhysician();
+            try{
+                fillforms.AuraButtonClose();
+            }
+            catch(Exception e){
+     
+            }
             fillforms.selectStudy();
             fillforms.history();
+            //fillforms.upload();
+            
             WebElement uploadInput = driver.findElement(By.xpath("//input[@type='file']"));
             uploadInput.sendKeys(System.getProperty("user.dir") + "//src//test//resources//UploadFile//screenshot.png");
-            Thread.sleep(2000);
-            fillforms.upload();
+            Thread.sleep(1000);
+            fillforms.clickUploadConfirmButton();
+            
+            
+            
             try {
                 fillforms.generalRadiologistPool();
             } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.FiveC_flow_Test_Components;
+ package com.FiveC_flow_Test_Components;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,6 +50,11 @@ public class BaseTest {
       prefs.put("profile.default_content_setting_values.clipboard-read", 1);
       prefs.put("profile.default_content_setting_values.clipboard-write", 1);
       options.setExperimentalOption("prefs", prefs);
+
+      // Enable performance log for network capture in Extent report
+      HashMap<String, Object> logPrefs = new HashMap<String, Object>();
+      logPrefs.put("performance", "ALL");
+      options.setCapability("goog:loggingPrefs", logPrefs);
 
       driver = new ChromeDriver(options);
 

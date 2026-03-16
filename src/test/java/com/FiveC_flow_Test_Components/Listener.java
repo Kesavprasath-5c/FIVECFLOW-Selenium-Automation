@@ -9,6 +9,10 @@ import com.FiveCResources.ExtendRepor;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+
+import java.util.List;
+import java.util.Map;
 
 public class Listener extends BaseTest implements ITestListener {
    ExtentReports extent;
@@ -32,18 +36,16 @@ public class Listener extends BaseTest implements ITestListener {
    // so using this result we can get methdo name which is going to executed
    @Override
    public void onTestStart(ITestResult result) {
-      // Basically this "result" will hold the information about the result which is
-      // goig to execute in this method and setting the entry in the report
       if (extent != null) {
          test = extent.createTest(result.getMethod().getMethodName());
       }
+      TestLogCapture.startCapture();
    }
 
    @Override
    public void onTestSuccess(ITestResult result) {
-      // This line of code say that if test is passed successfully then below line of
-      // code will exectute
       test.log(Status.PASS, "Test Passed");
+      attachTestLogs();
    }
 
    @Override
@@ -66,6 +68,7 @@ public class Listener extends BaseTest implements ITestListener {
 
       test.fail(result.getThrowable());
       test.log(Status.FAIL, "Test Failed");
+      attachTestLogs();
 
       if (driver != null) {
          try {
@@ -75,16 +78,39 @@ public class Listener extends BaseTest implements ITestListener {
             // where setting how we need to name the screenshot
             test.addScreenCaptureFromPath(filepath, result.getMethod().getMethodName());
 
+            // Add failed APIs from Chrome Network tab (4xx, 5xx, loading failed)
+            List<Map<String, String>> failedApis = NetworkLogUtil.getFailedApis(driver);
+            if (!failedApis.isEmpty()) {
+               String[][] tableData = new String[failedApis.size() + 1][4];
+               tableData[0] = new String[] { "Method", "Status", "URL", "Error" };
+               int i = 1;
+               for (Map<String, String> row : failedApis) {
+                  String url = row.getOrDefault("url", "");
+                  if (url.length() > 100) url = url.substring(0, 97) + "...";
+                  tableData[i++] = new String[] {
+                     row.getOrDefault("method", ""),
+                     row.getOrDefault("status", ""),
+                     url,
+                     row.getOrDefault("error", "")
+                  };
+               }
+               test.log(Status.INFO, MarkupHelper.createTable(tableData));
+            }
          } catch (Exception e) {
             e.printStackTrace();
          }
       }
    }
 
+   private void attachTestLogs() {
+      String logs = TestLogCapture.getAndClearLogs();
+      if (!logs.isEmpty()) {
+         test.log(Status.INFO, MarkupHelper.createCodeBlock(logs));
+      }
+   }
+
    @Override
    public void onFinish(ITestContext context) {
-      // this is responsible to generate the report if we miss this all report
-      // creation entry will we done but it will fail to generate the report
       extent.flush();
    }
 }

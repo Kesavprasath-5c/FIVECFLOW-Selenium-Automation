@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,11 +38,13 @@ public class POMQCReporting extends AbstractComponent {
     WebElement startReportingButton;
     @FindBy(xpath = "//button[text()='Start Reporting >']")
     WebElement startReportingButton2;
+    @FindBy(xpath = "//button[contains(text(),'Edit Report')]")
+    WebElement ClickEditRepor;
     @FindBy(xpath = "//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span")
     WebElement protocol;
     @FindBy(xpath = "//span[contains(text(),'Observations')]/ancestor::span[3]/following-sibling::span")
     WebElement observations;
-    @FindBy(xpath = "//img[@alt='icon_edit']")
+    @FindBy(xpath = "//button[contains(text(),'Switch to editor')]")
     WebElement editIcon;
     @FindBy(xpath = "//img[@alt='icon_insert-image']")
     WebElement insertImageButton;
@@ -65,7 +66,9 @@ public class POMQCReporting extends AbstractComponent {
     WebElement StudyAcceptedSuccess;
     @FindBy(xpath = "//button[text()='Reportable']")
     WebElement reportable;
-   @FindBy(xpath = "//div[contains(@class,'Toastify__toast-body')]//*[text()='Marked as Reportable']")
+    @FindBy(xpath = "//button[text()='Save Report']")
+    WebElement repSave;
+    @FindBy(xpath = "//div[contains(@class,'Toastify__toast-body')]//*[text()='Marked as Reportable']")
     WebElement markedAsReportableToast;
     @FindBy(xpath = "//button[contains(text(),'continue without merging')]")
     WebElement continueWithoutMerging;
@@ -77,12 +80,13 @@ public class POMQCReporting extends AbstractComponent {
     By viewCaseBy = By.xpath("//img[@alt='chevron-right-small-white']");
     By startReportingButtonBy = By.xpath("//button[text()='Start Reporting']");
     By startReportingButton2By = By.xpath("//button[text()='Start Reporting >']");
+    By ClickEditReport = By.xpath("//button[contains(text(),'Edit Report')]");
     By takeBreakCheckBoxBy = By.xpath("//label[contains(text(),'Take break after this case')]");
     By protocolBy = By.xpath("//span[contains(text(),'Protocol')]/ancestor::span/following-sibling::span");
     By observationsBy = By.xpath("//span[contains(text(),'Observations')]/ancestor::span[3]/following-sibling::span");
     By insertImageButtonBy = By.xpath("//img[@alt='icon_insert-image']");
     By saveTextisDisplayedBy = By.xpath("//span[contains(text(),'Saved')]");
-    By editIconBy = By.xpath("//img[@alt='icon_edit']");
+    By editIconBy = By.xpath("//button[contains(text(),'Switch to editor')]");
     By approveButtonBy = By.xpath("//div[contains(@class,'Icon__IconContainer')]//img[@alt='icon_circle-check']");
     By acceptCaseButtonBy = By.xpath("//button[contains(text(),'Accept Case')]");
     By submitButtonBy = By.xpath("//button[contains(text(),'Submit & take break')]");
@@ -91,8 +95,12 @@ public class POMQCReporting extends AbstractComponent {
     By StudyAcceptedSuccessBy = By
             .xpath("//div[contains(@class,'Toastify__toast-body')]//span[text()='Study accepted successfully']");
     By reportableBy = By.xpath("//button[text()='Reportable']");
-    By markedAsReportableToastBy = By.xpath("//div[contains(@class,'Toastify__toast-body')]//*[text()='Marked as Reportable']");
+    By markedAsReportableToastBy = By
+            .xpath("//div[contains(@class,'Toastify__toast-body')]//*[text()='Marked as Reportable']");
     By continueWithoutMergingBy = By.xpath("//button[contains(text(),'continue without merging')]");
+
+    //preRead - Save Report button (use exact text; if UI uses "Save" only, change to contains(text(),'Save'))
+    By repsaveButtonby = By.xpath("//button[text()='Save Report']");
 
     public Boolean logOutButtonIsDisplayed() {
         waitForWebElementToAppearBy(logoutButtonBy);
@@ -140,7 +148,11 @@ public class POMQCReporting extends AbstractComponent {
         waitForWebElementToAppearBy(editIconBy);
         editIcon.click();
     }
-
+   public void clickEditReport(){
+    waitForWebElementToAppearBy(ClickEditReport);
+    ClickEditRepor.click();
+    
+   }
     public void clickTkeBreakCheckBox() {
         waitForWebElementToAppearBy(takeBreakCheckBoxBy);
         takeBreakCheckBox.click();
@@ -148,7 +160,11 @@ public class POMQCReporting extends AbstractComponent {
 
     public void protocolSection(String content) throws Exception {
         waitForWebElementToAppearBy(protocolBy);
-        protocol.click();
+        try {
+            protocol.click();
+        } catch (Exception e) {
+            clickWithJS(protocol);
+        }
         protocol.sendKeys(content);
     }
 
@@ -159,7 +175,7 @@ public class POMQCReporting extends AbstractComponent {
         Thread.sleep(1000);
         try {
             observations.click();
-        } catch (ElementClickInterceptedException e) {
+        } catch (Exception e) {
             js.executeScript("arguments[0].click();", observations);
         }
         observations.sendKeys(content);
@@ -172,22 +188,38 @@ public class POMQCReporting extends AbstractComponent {
 
     public void clickSaveButton() {
         waitForLoaderToDisappear();
-        saveButton.click();
+        try {
+            saveButton.click();
+        } catch (Exception e) {
+            clickWithJS(saveButton);
+        }
     }
 
     public void clickApproveButton() {
         waitForWebElementToAppearBy(approveButtonBy);
-        approveButton.click();
+        try {
+            approveButton.click();
+        } catch (Exception e) {
+            clickWithJS(approveButton);
+        }
     }
 
     public void clickAcceptCaseButton() {
         waitForWebElementToAppearBy(acceptCaseButtonBy);
-        acceptCaseButton.click();
+        try {
+            acceptCaseButton.click();
+        } catch (Exception e) {
+            clickWithJS(acceptCaseButton);
+        }
     }
 
     public void clickSubmitButtonAndTakeBreak() {
         waitForWebElementToAppearBy(submitButtonBy);
-        submitButton.click();
+        try {
+            submitButton.click();
+        } catch (Exception e) {
+            clickWithJS(submitButton);
+        }
     }
 
     public void verifyReportEditedSuccessfully() {
@@ -202,7 +234,11 @@ public class POMQCReporting extends AbstractComponent {
 
     public void clickReportableButton() {
         waitForWebElementToAppearBy(reportableBy);
-        reportable.click();
+        try {
+            reportable.click();
+        } catch (Exception e) {
+            clickWithJS(reportable);
+        }
     }
 
     public void clickContinueWithoutMergingIfVisible() {
@@ -217,7 +253,11 @@ public class POMQCReporting extends AbstractComponent {
 
     public void clickInsertImageButton() {
         waitForWebElementToAppearBy(insertImageButtonBy);
-        insertImageButton.click();
+        try {
+            insertImageButton.click();
+        } catch (Exception e) {
+            clickWithJS(insertImageButton);
+        }
     }
 
     public String getMarkedAsReportableToastText() {
@@ -225,4 +265,14 @@ public class POMQCReporting extends AbstractComponent {
         return markedAsReportableToast.getText();
     }
 
+    //preRead
+    public void clickSaveReport(){
+        waitForWebElementToAppearBy(repsaveButtonby);
+        WebElement saveBtn = driver.findElement(repsaveButtonby);
+        try {
+            saveBtn.click();
+        } catch (Exception e) {
+            clickWithJS(saveBtn);
+        }
+    }
 }

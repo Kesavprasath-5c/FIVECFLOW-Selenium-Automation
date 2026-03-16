@@ -87,10 +87,8 @@
 
   </dependencies>
 
-  <!-- Maven Profiles -->
-   <!--  Instead of go and run the individual  XML suitFile we using below method --> 
+  <!-- Maven Profiles: run with mvn test -P<profileId> (only one profile at a time) -->
   <profiles>
-    
     <profile>
       <id>RegressionNormalFlow</id>
       <properties>
@@ -105,10 +103,25 @@
       </properties>
     </profile>
 
+    <!-- Pre-Read flow: mvn test -PPreReadFlow -->
     <profile>
-      <id>RegressionPre_ReadFlow</id>
+      <id>PreReadFlow</id>
       <properties>
         <suiteXmlFile>src/test/resources/Pre_ReadFlow.xml</suiteXmlFile>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>GlobalIradFlow</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/GlobalIradFlow.xml</suiteXmlFile>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>HilFlow</id>
+      <properties>
+        <suiteXmlFile>src/test/resources/HilFlow.xml</suiteXmlFile>
       </properties>
     </profile>
 

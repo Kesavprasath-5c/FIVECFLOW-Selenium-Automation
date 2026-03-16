@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.FiveC_flow_Test.CaseActivationPage;
 import com.FiveC_flow_Test.CaseAssignToQC;
 import com.FiveC_flow_Test.CaseAssignToRad;
+import com.FiveC_flow_Test.Hil_CaseActivation;
 import com.FiveC_flow_Test.PreRead_CaseActivation;
 import com.FiveC_flow_Test.QCReporting;
 import com.FiveC_flow_Test.RadReporting;
@@ -18,8 +19,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.io.FileUtils;
-import org.checkerframework.checker.units.qual.g;
-
 import java.io.File;
 
 public class StepDefinationoi extends BaseTest {
@@ -84,6 +83,17 @@ public class StepDefinationoi extends BaseTest {
                 System.out.println("Calling PreRead_Activation with driver: "
                                 + (preread.driver != null ? "Initialized" : "NULL"));
                 preread.PreRead_Activation(clientData);
+        }
+
+        @Given("Login to the client page and activate the Hil case and get the order_ID")
+        public void Login_to_Client_Page_and_acivate_a_Hil_case_and_get_the_order_ID() throws Exception {
+                String filePath = System.getProperty("user.dir")
+                                + "////src//test//java//com//FiveC_flow_data//loginData.json";
+                HashMap<String, String> clientData = getJsontoMap(filePath, "clientData");
+                Hil_CaseActivation hil_case = new Hil_CaseActivation();
+                hil_case.driver = this.driver;
+                hil_case.Hil_CaseActivations(clientData);
+
         }
 
         @When("Assign the case to rad")

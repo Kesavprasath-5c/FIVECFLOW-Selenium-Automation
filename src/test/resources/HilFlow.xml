@@ -1,0 +1,36 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="HIL Flow Suite">
+  <listeners>
+    <listener class-name="com.FiveC_flow_Test_Components.Listener"/>
+  </listeners>
+
+  <test name="HIL Case Activation">
+    <classes>
+      <class name="com.FiveC_flow_Test.Hil_CaseActivation">
+        <methods>
+          <include name="Hil_CaseActivations"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+
+  <test name="Assign to HIL Agent">
+    <classes>
+      <class name="com.FiveC_flow_Test.CaseAssignToQC">
+        <methods>
+          <include name="assignToHilAgent"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+
+  <test name="HIL Reporting">
+    <classes>
+      <class name="com.FiveC_flow_Test.QCReporting">
+        <methods>
+          <include name="HilReporting"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

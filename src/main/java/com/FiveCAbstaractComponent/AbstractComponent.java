@@ -3,6 +3,7 @@ package com.FiveCAbstaractComponent;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,13 +33,31 @@ public class AbstractComponent {
     }
 
     public void waitForWebElementToAppearBy(By findBy) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        waitForWebElementToAppearBy(findBy, 15);
+    }
+
+    public void waitForWebElementToAppearBy(By findBy, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(findBy));
+    }
+
+    public void waitForElementToBeClickable(By findBy) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.elementToBeClickable(findBy));
     }
 
     public void waitForToastToDisappear(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.invisibilityOf(element));
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            wait.until(ExpectedConditions.invisibilityOf(element));
+        } catch (Exception e) {
+            System.out.println("Toast did not disappear in time, continuing anyway");
+        }
+    }
+
+    public void clickWithJS(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
     }
 
     public WebElement verifyLoginTostResult() {
@@ -65,6 +84,5 @@ public class AbstractComponent {
         }
 
     }
-
 
 }

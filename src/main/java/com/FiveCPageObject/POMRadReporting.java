@@ -22,7 +22,8 @@ public class POMRadReporting extends AbstractComponent {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
+    @FindBy(xpath = "(//img[@alt='icon_close-white'])[3]")
+    WebElement hotKey;
     @FindBy(xpath = "//span[text()='Logout']")
     WebElement RadlogoutButton;
     @FindBy(xpath = "//img[@alt='icon_search']")
@@ -55,7 +56,18 @@ public class POMRadReporting extends AbstractComponent {
     WebElement insertImageButton;
     @FindBy(xpath = "//span[text()='REPORTED']")
     WebElement reported;
+    
+    //GlobalIarad Elements
+    @FindBy(xpath = "//span[text()='Observaciones']/ancestor::span[3]/following-sibling::span")
+    WebElement globalIardobservations;
+    @FindBy(xpath = "//span[text()='Impresión']/ancestor::span/following-sibling::span")
+    WebElement globalIardImpresión;
+    @FindBy(xpath = "//button[contains(text(),'Submit')]")
+    WebElement iRadSubmitButton;
+    @FindBy(xpath = "//span[text()='COMPLETED']")
+    WebElement iradCompletedreported;
 
+    By HotKey = By.xpath("(//img[@alt='icon_close-white'])[3]");
     By logoutButtonBy = By.xpath("//span[text()='Logout']");
     By searchIconBy = By.xpath("//img[@alt='icon_search']");
     By orderIdInputBy = By.className("mdc-text-field__input");
@@ -72,7 +84,52 @@ public class POMRadReporting extends AbstractComponent {
     By completedCheckboxBy = By.id("toggle--Completedlabel");
     By insertImageButtonBy = By.xpath("//img[@alt='icon_insert-image']");
     By reportedBy = By.xpath("//span[text()='REPORTED']");
+   
+   
 
+    //irad observationSection validation (DOM: Observaciones section has title span + sibling span#editor-section-paragraph; text in span[data-slate-string="true"])
+    By clientTemplateBy = By.xpath("//div[@role='textbox']//span[@data-slate-string='true' and contains(.,'Client Template')]");
+    By normalReportTextBy = By.xpath("//div[@role='textbox']//span[@data-slate-string='true' and contains(.,'normal report')]");
+    /** Observaciones section paragraph (sibling of Observaciones title; id="editor-section-paragraph"). */
+    By observationsParagraphBy = By.xpath("//div[contains(@class,'Elements_Section')][.//span[contains(.,'Observaciones')]]//span[contains(@id,'editor-section-paragraph')]");
+    By globaliradobservationsBy = By.xpath("//span[text()='Observaciones']/ancestor::span[3]/following-sibling::span");
+    By globaliradImpresiónBy = By.xpath("//span[text()='Impresión']/ancestor::span/following-sibling::span");
+    By byiRadSubmitButton = By.xpath("//button[contains(text(),'Submit')]");
+    By iradcompletedBy = By.xpath("//span[text()='COMPLETED']");
+
+    /**
+     * Types "normal report" in the Observaciones section, in the span with id="editor-section-paragraph" (below the Observaciones title).
+     */
+
+    public boolean isNormalReportTextDisplayed(int timeoutSeconds) {
+        try {
+            waitForWebElementToAppearBy(normalReportTextBy, timeoutSeconds);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if the given text is displayed in the report editor within the timeout.
+     * Use this to validate that typed content appears in the editor.
+     */
+    public boolean isTypedContentDisplayedInEditor(String expectedText, int timeoutSeconds) {
+        if (expectedText == null || expectedText.isEmpty()) return true;
+        try {
+            By locator = By.xpath("//div[@role='textbox']//span[@data-slate-string='true' and contains(.,'" + expectedText.replace("'", "''") + "')]");
+            waitForWebElementToAppearBy(locator, timeoutSeconds);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void HotKeyClose(){
+        waitForWebElementToAppearBy(HotKey);
+            hotKey.click();
+      
+    }
     public Boolean isLogoutButtonDisplayed() {
         waitForWebElementToAppearBy(logoutButtonBy);
         return RadlogoutButton.isDisplayed();
@@ -133,6 +190,31 @@ public class POMRadReporting extends AbstractComponent {
         Thread.sleep(1000);
         observations.sendKeys(content);
     }
+    
+    /**
+     * Types "normal report" in the Observaciones section (no-arg for test convenience).
+     */
+   
+
+    public void typeNormalReportInObservations(String content) throws Exception {
+        waitForWebElementToAppearBy(globaliradobservationsBy);
+        Thread.sleep(1000);
+        globalIardobservations.click();
+        Thread.sleep(1000);
+        globalIardobservations.sendKeys(content);
+        Thread.sleep(2000);
+
+    }
+
+    public void typeNormalReportInImpresión(String content) throws Exception {
+        waitForWebElementToAppearBy(globaliradImpresiónBy);
+        Thread.sleep(1000);
+        globalIardImpresión.click();
+        Thread.sleep(1000);
+        globalIardImpresión.sendKeys(content);
+        Thread.sleep(2000);
+
+    }
 
     public Boolean savedtextDisplayed() {
         waitForWebElementToAppearBy(savedBy);
@@ -171,6 +253,28 @@ public class POMRadReporting extends AbstractComponent {
     public Boolean reportedtextDisplayed() {
         waitForWebElementToAppearBy(reportedBy);
         return reported.isDisplayed();
+    }
+    public Boolean iradcompletedtextDisplayed() {
+        waitForWebElementToAppearBy(iradcompletedBy);
+        return iradCompletedreported.isDisplayed();
+    }
+
+     /**
+     * Returns true if "Client Template" text is loaded in the report editor within the given timeout.
+     */
+     public boolean isIradClientTemplateLoaded(int timeoutSeconds) {
+        try {
+            waitForWebElementToAppearBy(clientTemplateBy, timeoutSeconds);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+       
+    }
+    public void iRadSubmitButton(){
+        waitForWebElementToAppearBy(byiRadSubmitButton);
+        iRadSubmitButton.click();
     }
 
 }

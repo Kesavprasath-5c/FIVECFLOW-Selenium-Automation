@@ -1,0 +1,36 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Global iRAD Flow Suite">
+  <listeners>
+    <listener class-name="com.FiveC_flow_Test_Components.Listener"/>
+  </listeners>
+
+  <test name="iRAD Case Activation">
+    <classes>
+      <class name="com.FiveC_flow_Test.IradClientCaseActivation">
+        <methods>
+          <include name="iradCaseActivation"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+
+  <test name="iRAD Admin Case Assign">
+    <classes>
+      <class name="com.FiveC_flow_Test.IradClientCaseActivation">
+        <methods>
+          <include name="iradAdminCaseAssign"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+
+  <test name="iRAD Case Reporting">
+    <classes>
+      <class name="com.FiveC_flow_Test.RadReporting">
+        <methods>
+          <include name="iradCaseReporting"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

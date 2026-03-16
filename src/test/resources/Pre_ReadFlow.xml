@@ -8,4 +8,13 @@
       <class name="com.cucumber.TestNGPreReadRunner"/>
     </classes>
   </test>
+  <test name="PreRead_QC_Reporting">
+    <classes>
+      <class name="com.FiveC_flow_Test.QCReporting">
+        <methods>
+          <include name="preRead_Reporting"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
 </suite>
